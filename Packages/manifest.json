@@ -1,8 +1,10 @@
 {
   "dependencies": {
+    "com.unity.2d.pixel-perfect": "5.0.3",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",
     "com.unity.2d.tilemap.extras": "3.1.0",
+    "com.unity.editorcoroutines": "1.0.0",
     "com.unity.ide.rider": "3.0.21",
     "com.unity.render-pipelines.universal": "14.0.7",
     "com.unity.textmeshpro": "3.0.6",

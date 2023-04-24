@@ -1,8 +1,8 @@
 ﻿namespace Kira
 {
-    public class BiomeTemp
+    public readonly struct BiomeTemp
     {
-        public BiomePreset biome;
+        public readonly BiomePreset biome;
 
         public BiomeTemp(BiomePreset biome)
         {

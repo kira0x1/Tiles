@@ -3,20 +3,28 @@ using UnityEngine;
 
 namespace Kira
 {
-    public class Map : MonoBehaviour
+    public class MapGenerator : MonoBehaviour
     {
+        public MapPreview mapPreview;
+        public MapType mapType;
         public BiomePreset[] biomes;
-        public GameObject tilePrefab;
+        public SpriteRenderer tilePrefab;
+
+        public TerrainType[] regions;
 
         [Header("Dimensions")]
         public int width = 50;
         public int height = 50;
         public float scale = 1.0f;
         public Vector2 offset;
+        public int octaves = 4;
+        public float lacunarity = 0.5f;
+        public float persistance = 2f;
+        public int seed;
 
         [Header("Height Map")]
         public Wave[] heightWaves;
-        public float[,] heightMap;
+        private float[,] heightMap;
 
         [Header("Moisture Map")]
         public Wave[] moistureWaves;
@@ -26,9 +34,17 @@ namespace Kira
         public Wave[] heatWaves;
         private float[,] heatMap;
 
+
         private void Start()
         {
             GenerateMap();
+        }
+
+        private void OnValidate()
+        {
+            if (width < 1) width = 1;
+            if (height < 1) height = 1;
+            if (scale <= 0.0f) scale = 0.01f;
         }
 
         private void GenerateMap()
@@ -41,8 +57,15 @@ namespace Kira
             {
                 for (int x = 0; x < width; x++)
                 {
-                    GameObject tile = Instantiate(tilePrefab, new Vector3(x, y, 0), Quaternion.identity, transform);
-                    tile.GetComponent<SpriteRenderer>().sprite = GetBiome(heightMap[x, y], moistureMap[x, y], heatMap[x, y]).GetTileSprite();
+                    SpriteRenderer tile = Instantiate(tilePrefab, new Vector3(x, y, 0), Quaternion.identity, transform);
+                    if (mapType == MapType.Noise)
+                    {
+                        tile.color = Color.Lerp(Color.black, Color.white, heightMap[x, y]);
+                    }
+                    else if (mapType == MapType.Biomes)
+                    {
+                        tile.sprite = GetBiome(heightMap[x, y], moistureMap[x, y], heatMap[x, y]).GetTileSprite();
+                    }
                 }
             }
         }
@@ -54,22 +77,10 @@ namespace Kira
             heatMap = NoiseGenerator.Generate(width, height, scale, heatWaves, offset);
         }
 
-        public Sprite[] GenerateSpriteMap()
+        public float[,] GenerateNoiseMap()
         {
-            heightMap = NoiseGenerator.Generate(width, height, scale, heightWaves, offset);
-            moistureMap = NoiseGenerator.Generate(width, height, scale, moistureWaves, offset);
-            heatMap = NoiseGenerator.Generate(width, height, scale, heatWaves, offset);
-            Sprite[] spriteMap = new Sprite[width * height];
-
-            for (int y = 0; y < height; y++)
-            {
-                for (int x = 0; x < width; x++)
-                {
-                    spriteMap[y * width + x] = GetBiome(heightMap[x, y], moistureMap[x, y], heatMap[x, y]).GetTileSprite();
-                }
-            }
-
-            return spriteMap;
+            float[,] result = NoiseGenerator.GenerateNoiseMap(width, height, seed, scale, octaves, persistance, lacunarity, offset);
+            return result;
         }
 
         public BiomePreset GetBiome(float height, float moisture, float heat)
