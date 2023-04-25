@@ -1,4 +1,4 @@
-﻿namespace Kira
+﻿namespace Kira.Map
 {
     public readonly struct BiomeTemp
     {

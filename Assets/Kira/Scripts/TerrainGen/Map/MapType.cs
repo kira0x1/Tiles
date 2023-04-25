@@ -1,9 +1,8 @@
-﻿namespace Kira
+﻿namespace Kira.Map
 {
     public enum MapType
     {
         Noise,
-        Biomes,
         Color
     }
 }

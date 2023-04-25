@@ -1,4 +1,4 @@
-namespace Kira
+namespace Kira.Noise
 {
     [System.Serializable]
     public class Wave

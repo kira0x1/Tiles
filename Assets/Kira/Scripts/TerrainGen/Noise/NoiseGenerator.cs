@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Kira
+namespace Kira.Noise
 {
     public class NoiseGenerator : MonoBehaviour
     {
@@ -33,8 +33,17 @@ namespace Kira
             return noiseMap;
         }
 
-        public static float[,] GenerateNoiseMap(int mapWidth, int mapHeight, int seed, float scale, int octaves, float persistance, float lacunarity, Vector2 offset)
+        public static float[,] GenerateNoiseMap(NoiseSettings noiseSettings, Wave[] waves)
         {
+            int mapWidth = noiseSettings.width;
+            int mapHeight = noiseSettings.height;
+            float scale = noiseSettings.scale;
+            Vector2 offset = noiseSettings.offset;
+            int seed = noiseSettings.seed;
+            int octaves = noiseSettings.octaves;
+            float persistance = noiseSettings.persistance;
+            float lacunarity = noiseSettings.lacunarity;
+
             float[,] noiseMap = new float[mapWidth, mapHeight];
 
             System.Random prng = new System.Random(seed);
@@ -75,12 +84,21 @@ namespace Kira
                         float sampleX = (x - halfWidth + octaveOffsets[i].x) / scale * frequency;
                         float sampleY = (y - halfHeight + octaveOffsets[i].y) / scale * frequency;
 
-                        float perlinValue = Mathf.PerlinNoise(sampleX, sampleY) * 2 - 1;
+                        float perlinValue = Mathf.PerlinNoise(sampleX, sampleY);
                         noiseHeight += perlinValue * amplitude;
 
                         amplitude *= persistance;
                         frequency *= lacunarity;
+
+
+                        foreach (Wave wave in waves)
+                        {
+                            float wX = sampleX * wave.frequency + wave.seed;
+                            float wY = sampleY * wave.frequency + wave.seed;
+                            noiseHeight += Mathf.PerlinNoise(wX, wY) * wave.amplitude;
+                        }
                     }
+
 
                     if (noiseHeight > maxLocalNoiseHeight) maxLocalNoiseHeight = noiseHeight;
                     else if (noiseHeight < minLocalNoiseHeight) minLocalNoiseHeight = noiseHeight;
@@ -93,9 +111,11 @@ namespace Kira
             {
                 for (int x = 0; x < mapWidth; x++)
                 {
-                    noiseMap[x, y] = Mathf.InverseLerp(minLocalNoiseHeight, maxLocalNoiseHeight, noiseMap[x, y]);
+                    float inverseLerp = Mathf.InverseLerp(minLocalNoiseHeight, maxLocalNoiseHeight, noiseMap[x, y]);
+                    noiseMap[x, y] = Mathf.Floor(inverseLerp * noiseSettings.heightMultiplier);
                 }
             }
+
 
             return noiseMap;
         }

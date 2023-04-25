@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Kira
+namespace Kira.Map
 {
     [CreateAssetMenu(fileName = "New Biome Preset", menuName = "Kira/New Biome Preset")]
     public class BiomePreset : ScriptableObject

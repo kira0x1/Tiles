@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Kira
+namespace Kira.Map
 {
     [System.Serializable]
     public struct TerrainType
