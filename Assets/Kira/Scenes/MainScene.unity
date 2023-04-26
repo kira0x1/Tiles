@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &109129237
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -401,7 +401,7 @@ Sprite:
         format: 0
         dimension: 0
       m_DataSize: 80
-      _typelessdata: 0ad723c00ad72340000000000ad723400ad723c0000000000ad723400ad72340000000000ad723c00ad723c0000000000000000000000000000000000000000000000000000000000000000000000000
+      _typelessdata: 0ad723c00ad72340000000000ad723400ad723c0000000000ad723400ad72340000000000ad723c00ad723c000000000000000000000803f0000803f000000000000803f0000803f0000000000000000
     m_Bindpose: []
     textureRect:
       serializedVersion: 2
@@ -618,7 +618,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1504804336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -664,13 +664,13 @@ MonoBehaviour:
   noiseSettings:
     width: 512
     height: 512
-    scale: 12
     offset: {x: 0, y: 0}
+    scale: 12
     octaves: 4
     lacunarity: 2
     persistance: 0.5
-    seed: 0
     heightMultiplier: 6.95
+    seed: 0
   heightWaves: []
 --- !u!4 &1504804337
 Transform:

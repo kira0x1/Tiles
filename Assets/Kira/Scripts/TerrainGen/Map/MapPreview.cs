@@ -61,7 +61,6 @@ namespace Kira.Map
             previewSprite.sprite = terrainSprite;
         }
 
-
         private void GenerateColors()
         {
             int width = mapGenerator.noiseSettings.width;

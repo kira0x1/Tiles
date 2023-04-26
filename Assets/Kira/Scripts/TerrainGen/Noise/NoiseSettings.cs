@@ -7,13 +7,13 @@ namespace Kira.Noise
     {
         public int width;
         public int height;
-        public float scale;
         public Vector2 offset;
-        public int octaves;
-        public float lacunarity;
-        public float persistance;
+        [Range(1f, 256f)] public float scale;
+        [Range(1, 24)] public int octaves;
+        [Range(0.01f, 2f)] public float lacunarity;
+        [Range(0.01f, 2f)] public float persistance;
+        [Range(0f, 10f)] public float heightMultiplier;
         public int seed;
-        public float heightMultiplier;
 
         public NoiseSettings(int width, int height, float scale, Vector2 offset, int octaves, float lacunarity, float persistance, int seed, float heightMultiplier)
         {

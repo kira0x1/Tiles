@@ -43,8 +43,8 @@ namespace Kira.Noise
             int octaves = noiseSettings.octaves;
             float persistance = noiseSettings.persistance;
             float lacunarity = noiseSettings.lacunarity;
-
             float[,] noiseMap = new float[mapWidth, mapHeight];
+
 
             System.Random prng = new System.Random(seed);
             Vector2[] octaveOffsets = new Vector2[octaves];
@@ -112,7 +112,7 @@ namespace Kira.Noise
                 for (int x = 0; x < mapWidth; x++)
                 {
                     float inverseLerp = Mathf.InverseLerp(minLocalNoiseHeight, maxLocalNoiseHeight, noiseMap[x, y]);
-                    noiseMap[x, y] = Mathf.Floor(inverseLerp * noiseSettings.heightMultiplier);
+                    noiseMap[x, y] = inverseLerp * noiseSettings.heightMultiplier;
                 }
             }
 
